@@ -108,6 +108,7 @@ export function inventory(options = {}) {
   // Only implicit tool discovery excludes these runtime/dependency trees.
   // Explicit --root/--scan-root still traverses them when requested.
   const discoveryExclusions = ['.cache/codex-runtimes', '.vscode/extensions',
+    '.codex/app-server-control', '.codex/app-server-daemon',
     '.vscode-insiders/extensions', '.npm', '.rustup', '.cargo/registry',
     '.bun/install/cache', '.nuget/packages', '.gradle/caches', '.m2/repository']
     .map(relative => path.join(home, relative));

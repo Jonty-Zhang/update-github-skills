@@ -1,0 +1,5 @@
+# Local machine inventory, backups and isolated test fixtures.
+.skill-update-reports/
+.skill-updater-backups/
+.skill-inventory-test-*/
+acceptance/

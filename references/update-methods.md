@@ -45,6 +45,6 @@
 
 默认从常见目录以及用户隐藏工具目录搜索，所有根目录默认递归深度 16，可用 `--max-depth` 调整；最多读取 100000 个不同物理目录，可用 `--max-dirs` 调整。不同根的重叠目录复用读取结果，不重复消耗目录预算，仍保留不同的入口别名。一个物理子树已被其他根完整扫描时，较浅遍历产生的深度告警会移除；真正未覆盖的子树仍保留告警。命中上限会写警告并返回退出码 2。
 
-目录排除项写入 `exclusions`。隐式工具发现跳过 `.cache/codex-runtimes`、`.vscode/extensions` 等运行时/依赖树，不把它们的深层内容当成发现失败，也不会泛化跳过真正的 `plugins/cache` 或整个 `.cache`。显式 `--scan-root` 可补扫这些运行时/扩展树；对通用排除项（例如 `node_modules`）则用 `--root` 直接指定其中的安装目录。`.skill-updater-backups` 为保留备份目录，正常盘点不深入其内。入口符号链接和联接会跟随并去重，脚本本身也可通过联接安装路径调用。内部环路、断链和访问错误有警告。其他项目和磁盘须使用 `--scan-root` 补扫。使用 `--no-defaults` 时只扫描显式参数，适合隔离测试。
+目录排除项写入 `exclusions`。隐式工具发现跳过 `.cache/codex-runtimes`、`.vscode/extensions` 等运行时/依赖树，以及 `.codex/app-server-control`、`.codex/app-server-daemon` 中的运行时通信端点，不把它们的深层内容或 IPC socket 当成 skill 发现失败，也不会泛化跳过真正的 `plugins/cache` 或整个 `.cache`。显式 `--scan-root` 可补扫这些运行时/扩展树；对通用排除项（例如 `node_modules`）则用 `--root` 直接指定其中的安装目录。`.skill-updater-backups` 为保留备份目录，正常盘点不深入其内。入口符号链接和联接会跟随并去重，脚本本身也可通过联接安装路径调用。内部环路、断链和访问错误有警告。其他项目和磁盘须使用 `--scan-root` 补扫。使用 `--no-defaults` 时只扫描显式参数，适合隔离测试。
 
 来源 manifest 的错误会中止盘点，损坏/未知锁文件则保留警告。插件 cache 的来源格式因管理器而异，脚本只作管理器提示；不把普通文件中的链接猜成来源。脚本不会报告 remote URL 中的凭据。

@@ -19,6 +19,11 @@ function skill(relative, name) { write(`${relative}/SKILL.md`, `---\nname: ${nam
 function scan(roots, extra = {}) { return inventory({ defaults: false, home: path.join(base, 'home'), roots, ...extra }); }
 function git(cwd, args) { return execFileSync('git', ['-C', cwd, ...args], { encoding: 'utf8', windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] }); }
 try {
+  // Stop Git ancestry at the fixture boundary. Otherwise running tests inside
+  // a GitHub checkout makes every copied fixture inherit that checkout's remote.
+  git(base, ['init']);
+  git(base, ['-c', 'user.email=test@example.test', '-c', 'user.name=Fixture',
+    '-c', 'commit.gpgSign=false', 'commit', '--allow-empty', '-m', 'isolated fixtures']);
   check('GitHub URL recognition removes credentials and rejects lookalike hosts', () => {
     assert.equal(githubRepo('git@github.com:example/skills.git'), 'example/skills');
     assert.equal(githubRepo('ssh://git@github.com/example/skills.git'), 'example/skills');

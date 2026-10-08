@@ -1,0 +1,4 @@
+interface:
+  display_name: "更新所有 GitHub Skills"
+  short_description: "跨工具盘点并更新 GitHub 来源技能，覆盖共享目录、项目安装和插件"
+  default_prompt: "使用 $update-github-skills 更新所有工具中从 GitHub 安装的 skill，并报告更新结果和未完成项。"
